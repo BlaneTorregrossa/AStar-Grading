@@ -1,7 +1,10 @@
+# All in one solution
+
 import math
-import random
+import random   # To use Random.randrange()
 
 class Node(object):
+    # initializing scores walkable spaces, neighbors, parents
     def __init__(self, guid, position):
         self.guid = ''
         if guid < 10:
@@ -9,7 +12,7 @@ class Node(object):
         else:
             self.guid = str(guid)
 
-        self.pos = positionself.h = 0
+        self.pos = position
         self.h = 0
         self.g = 0
         self.f = self.f = self.h + self.g
@@ -22,26 +25,32 @@ class Node(object):
 
     def __getstring__(self):
         return str.format('({0})', self.guid)
-        
-GRAPH = []
-COUNT = 0
+
+GRAPH = [] # assigning empty Graph array
+COUNT = 0 #start counter at 0
+
+# Set up 10X10 graph
 for ypos in range(10):
     for xpos in range(10):
         GRAPH.append(Node(COUNT, (xpos, ypos)))
         COUNT += 1
 
+# Getting Manhattan distance with a given starting point (start) and end point (goal) 
 def manhattan(start, goal):
     
     ydiff = abs(goal[1]) - start[1])
     xdiff = abs(goal[0] - start[0])
     return xdiff + ydiff
 
+# determining cost of each movement based on score
 def movementcost(start, goal):
     if start[0] == goal[0] or start[1] == goal[1]:
         return 10
     else:
         return 14
 
+# initialize neighbor variables in for eight directions from the current node
+# then neighbors array
 def getneighbors(node, nodes):
     current = node
     right = (current[0] + 1, current[1])
@@ -73,6 +82,7 @@ def retracepath(goal):
 
     return path
 
+# simplistic Astar base
 def astar(start, goal, graph):
     current = start
     openlist = [current]
@@ -102,6 +112,7 @@ def astar(start, goal, graph):
 
     return path
 
+# shuffle starting and goal points on graph for navigation 
 def shuffle():
     rangestart = random.randrange(0, 99)
     rangegoal = random.randrange(0,99)
@@ -120,7 +131,8 @@ def shuffle():
     result = astar(start, goal, copygraph)
     return [start, goal, blockers, result]
     
-
+# Test run for astar
+# Removed if used in main
 # def testrun(currentfunction):
 #     test = shuffle()
 #     start = test[0]
@@ -149,6 +161,7 @@ def shuffle():
 #     return givenresult
 
 
+# main function 
 def main():
     copygraph = list(GRAPH)
     test = []
@@ -175,6 +188,7 @@ def main():
     print str.format('expected result {0} \n given result {1}\n', expectedresult, givenresult)
     
 
+# print graph
 def printgraph(graph, result):
     count = 1
     for i in graph:
