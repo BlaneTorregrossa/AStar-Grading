@@ -8,7 +8,9 @@ def Bubble(sortable):
     ordered = False
     for i in slist:
         ordered = isgreater(slist[i].value, slist[i + 1].value)
-        if ordered == False
+        if ordered == True:
+            swapplaces(i, i + 1, slist[i].value, slist[i + 1].value)
+        
 
 def swapplaces(pos1, pos2, num1, num2, sortable):
     slist = sortable
@@ -21,3 +23,9 @@ def isgreater(num1, num2):
         return True
     else:
         return False
+
+def findgreatest(slist):
+    high = 0
+    for i in slist:
+        if slist[i] > high:
+            high = slist[i]
