@@ -24,9 +24,15 @@ def retrace(start, goal):
     return path
 
 def printpath(path):
+    for i in path:
+        print 'Node: ', i.name
+    f = pathcost(path)
 
-    fir i in path:
-    print 'Node: ', i.name
+def pathcost(path):
+    cost = 0
+    for i in path:
+        cost = cost + i.Node.f
+    return cost
 
 def get_neighbors(current, nodes):
     '''get the neighbors    nodes the list of nodes to check    current the node to check nodes with'''
