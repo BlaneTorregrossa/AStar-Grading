@@ -1,4 +1,3 @@
-import gather
 import pathfinding
 from pathfinding import testfunc
 from pathfinding import getneighbors
@@ -16,11 +15,10 @@ from Astar import algo
 #parameters: start, goal, graph
 #postconditions: function will return a list
 def main():
-    '''main'''
     failcount = 0
     passcount = 0
     for _ in range(100):
-        res = testfunc(pathfinding.astar(GRAPH[4], GRAPH[25], GRAPH))
+        res = testfunc(pathfinding.astar(GRAPH[0], GRAPH[99], GRAPH))
         if res:
             passcount += 1
         else:

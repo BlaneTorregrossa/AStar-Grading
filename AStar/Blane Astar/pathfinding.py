@@ -27,7 +27,6 @@ class Node(object):
         
         return str.format('({0}) ', self.guid)
 
-
 def manhattan(start, goal):
     ydif = abs(goal[1] - start[1])
     xdif = abs(goal[0] - start[0])
@@ -193,7 +192,3 @@ def printgraph(graph, result):
         else:
             print i,
         count += 1
-
-
-if __name__ == '__main__':
-    main()
