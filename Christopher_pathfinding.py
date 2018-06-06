@@ -87,8 +87,6 @@ def astar(start, goal, graph):
             tentative_g = current.g + costtomove(current, neighbor)
             if neighbor in closedlist:
                 continue
-            if neighbor not in closedlist:
-                continue
             else:
                 neighbor.g = tentative_g + current.g
                 neighbor.parent = current
