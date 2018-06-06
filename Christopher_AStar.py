@@ -13,7 +13,6 @@ class Node(object):
         return "Name: " + self.name + "\nPosition " + str(self.x) + ", " + str(self.y)
 
 def retrace(start, goal):
-
     path = []
     current = goal
     while current.parent is not None:
