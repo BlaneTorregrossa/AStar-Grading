@@ -26,6 +26,14 @@ class Node(object):
     def __str__(self):        
         return str.format('({0}) ', self.guid)
 
+
+blane_graph = []
+counter = 0
+for ypos in range(10):
+    for xpos in range(10):
+        blane_graph.append(Node(Count, (xpos, ypos)))
+        counter += 1
+
 def manhattan(start, goal):
     ydif = abs(goal[1] - start[1])
     xdif = abs(goal[0] - start[0])
@@ -60,7 +68,7 @@ def getneighbors(node, nodes):
 
 
 
-def astar(start, goal, graph):
+def blane_astar(start, goal, graph):
     current = start
     openlist = [current]
     closedlist = []
@@ -85,9 +93,3 @@ def astar(start, goal, graph):
                 openlist[nodecmp] = openlist[node]
                 openlist[node] = temp
     return path
-
-
-
-
-
-

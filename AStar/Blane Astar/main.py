@@ -1,14 +1,20 @@
 #   Algorithm 1
-import pathfinding
-from pathfinding import GRAPH 
-from pathfinding import astar
+import Blane_pathfinding_test
+from Blane_pathfinding_test import blane_graph
+from Blane_pathfinding_test import blane_astar
 
-#   Algorithm 2 Missing ***
-# import astaralgo
+#   Algorithm 2 
+#   Still need to import astar algorithm and the Graph
+import Christopher_pathfinding_test
+from Christopher_pathfinding_test import christopher_graph
+from Christopher_pathfinding_test import christopher_astar
 
+
+#   Does not return anything but adds to lists
+#   Needs smaller edits ***
 def PassFail(passlist, giventest, actualpath, givengraph, currentalgo):
     passcheck = False
-    copygraph = list(graph)
+    copygraph = list(givengraph)
     test = giventest
     start = copygraph[test[0][0]]
     goal = copygraph[test[1][0]]
@@ -41,11 +47,13 @@ def PassFail(passlist, giventest, actualpath, givengraph, currentalgo):
     actualpath.append(actualres)
 
 
-#   ***
-def getpathscore(algopath, expectedpath):
+#   To get the difference in position between each node of two paths 
+#   and give a score based off of how close they are    ***
+def getpathscore(algopath, expectedpath, graph):
     pass
     
-#   ***
+#   Takes given results from the passfail and pathscore tests and creates a final grade
+#   based off of the previous test results  ***
 def finalgrade(pfresults, pathresults):
     pflength = len(pfresults)
     for i in pfresults:
@@ -90,8 +98,8 @@ def main():
     givenpaths = []
     pathresults = []
     arrangement = []
-    usedgraphs = [GRAPH]
-    algolist = [astar]
+    usedgraphs = [blane_graph, christopher_graph]
+    algolist = []
 
     # to go trough each test case in the list and run the test
     # Pass-Fail then path accuracy
