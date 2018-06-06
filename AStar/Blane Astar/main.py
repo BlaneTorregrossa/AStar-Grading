@@ -23,12 +23,10 @@ def PassFail(passlist, giventest, actualpath):
     expectedres = []
     for i in expected:
         expectedres.append(int(i.guid))
-    print str.format('start::{0} goal::{1} unwalkables::{2}', start, goal, unwalkable)
 
     actualres = []
     for i in result:
         actualres.append(int(i.guid))
-    print str.format('expected result {0} \nactual   result {1}', expectedres, actualres)
 
     if actualres == expectedres:
         passcheck == True
@@ -124,7 +122,8 @@ def main():
 
     arrangement.append(finalgrade(currentresults, pathresults)
 
-    #   Should name algorithm in list with score when written to file
+    #   Should name algorithm in list with score when written to file ***
+    #   Algorithm names here are not accurate
     #   standard insertion
     insertiontest(arrangement)
     for i in range(len(arrangement)):
