@@ -59,14 +59,6 @@ def getneighbors(node, nodes):
     return neighbors
 
 
-def retrace(goal):
-    current = goal
-    path = []
-    while current:
-        path.append(current)
-        current = current.parent
-    return path
-
 
 def astar(start, goal, graph):
     current = start
@@ -95,100 +87,7 @@ def astar(start, goal, graph):
     return path
 
 
-def testfunc(astarfunc):
-    test = shuffle()
-    start = test[0]
-    goal = test[1]
-    unwalkable = test[2]
-    expected = test[3]
-    copygraph = list(GRAPH)
-    for i in unwalkable:
-        copygraph[i].walkable = False
-
-    result = astarfunc(start, goal, copygraph)
-
-    expectedres = []
-    for i in expected:
-        expectedres.append(int(i.guid))
-
-    actualres = []
-    for i in result:
-        actualres.append(int(i.guid))
-    line1 = str.format(
-        'start::{0} goal::{1} unwalkables::{2}\n', start, goal, unwalkable)
-    line2 = str.format('[[{0}], [{1}], {2}] \n', int(
-        start.guid), int(goal.guid), unwalkable)
-    line3 = str.format(
-        'expected result {0} \nactual   result {1}\n', expectedres, actualres)
-
- 
-    return actualres == expectedres
 
 
-GRAPH = []
-COUNT = 0
-for ypos in range(10):
-    for xpos in range(10):
-        GRAPH.append(Node(COUNT, (xpos, ypos)))
-        COUNT += 1
 
-
-def shuffle():
-    import random
-    ranstart = random.randrange(0, 99)
-    rangoal = random.randrange(0, 99)
-    start = GRAPH[ranstart]
-    goal = GRAPH[rangoal]
-    for i in GRAPH:
-        i.walkable = True
-        i.parent = None
-    blockers = []
-    numblockers = random.randrange(0, 25)
-    for i in range(numblockers):
-        blockers.append(random.randrange(0, 99))
-    copygraph = list(GRAPH)
-    for i in blockers:
-        copygraph[i].walkable = False
-    result = astar(start, goal, copygraph)
-    return [start, goal, blockers, result]
-
-
-def main():
-    copygraph = list(GRAPH)
-    test = [[82], [85], [76, 44, 11], [85, 74, 73, 82]]
-    start = copygraph[test[0][0]]
-    goal = copygraph[test[1][0]]
-    unwalkable = test[2]
-    expected = []
-    for i in test[3]:
-        expected.append(copygraph[i])
-
-    for i in unwalkable:
-        copygraph[i].walkable = False
-
-    result = astar(start, goal, copygraph)
-
-    expectedres = []
-    for i in expected:
-        expectedres.append(int(i.guid))
-    print str.format('start::{0} goal::{1} unwalkables::{2}', start, goal, unwalkable)
-
-    actualres = []
-    for i in result:
-        actualres.append(int(i.guid))
-    print str.format('expected result {0} \nactual   result {1}', expectedres, actualres)
-
-
-def printgraph(graph, result):
-    count = 1
-    for i in graph:
-        if count % 10 == 0:
-            print i, '\n'
-        elif i in result:
-            print '(->) ',
-        elif not i.walkable:
-            print '(xx) ',
-        else:
-            print i,
-        count += 1
 
