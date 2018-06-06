@@ -2,7 +2,7 @@ import math
 
 
 class Node(object):
-    
+
 
     def __init__(self, guid, position):
         
@@ -23,8 +23,7 @@ class Node(object):
     def __getitem__(self, key):
         return self.pos[key]
 
-    def __str__(self):
-        
+    def __str__(self):        
         return str.format('({0}) ', self.guid)
 
 def manhattan(start, goal):
@@ -122,7 +121,7 @@ def testfunc(astarfunc):
     line3 = str.format(
         'expected result {0} \nactual   result {1}\n', expectedres, actualres)
 
-
+ 
     return actualres == expectedres
 
 
@@ -192,3 +191,4 @@ def printgraph(graph, result):
         else:
             print i,
         count += 1
+
