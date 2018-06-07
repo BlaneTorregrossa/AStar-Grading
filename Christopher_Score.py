@@ -9,8 +9,8 @@ def sortscores(results):
         nodescores.append(nodes)
         cost = costscore(results[r].value)
         costscores.append(cost)
-    nodescores = Bubble(nodescores)
-    costscores =Bubble(costscores)
+    nodescores = Bubble(nodescores, 10)
+    costscores = Bubble(costscores, 10)
 
 def costscore(cost):
     score = 100 - cost
@@ -27,3 +27,6 @@ def countnodes(path):
         nodecount += 1
     return nodecount
 
+def testsort():
+    
+    results = []
