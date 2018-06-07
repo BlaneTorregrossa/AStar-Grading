@@ -1,7 +1,7 @@
 class Result(object):
-    def __init__(self, value, lock)
+    def __init__(self, cost, nodes, lock)
     self.value = value
-    self.lock = False
+    self.nodes = nodes
 
 def Bubble(sortable, loops):
     '''Need to sort through every value in the list. Locking the highest number into place when 
@@ -10,6 +10,7 @@ def Bubble(sortable, loops):
     sortloop = loops
     for i in sortloop:
         sortloop(slist)
+    return sortloop
 
 def swapplaces(pos1, pos2, num1, num2, sortable):
     '''swaps the positon of the two values in the list'''
@@ -39,7 +40,3 @@ def sortloop(slist):
         notordered = isgreater(slist[i].value, slist[i + 1].value)
         if notordered == True:
             swapplaces(i, i + 1, slist[i].value, slist[i + 1].value)
-
-'def lockvalue(res):
-    '''sets the value's lock to True'''
-    'val.lock = True
