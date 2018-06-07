@@ -9,7 +9,7 @@ def main():
     failcount = 0
     passcount = 0
     valuelist = []
-    for _ in range(100):
+    for _ in range(10):
         res = testfunc(astar(GRAPH[4], GRAPH[25], GRAPH))
         if res:
             passcount += 1
