@@ -78,19 +78,19 @@ def christopher_astar(start, goal, graph):
     openlist = []
     closedlist = []
     openlist.append(current)
-    # openlist.append(current)
     openlist.sort(key=lambda node: node.f)
-    # Problem below here. I most likely have to rewrite this ***
     while goal not in closedlist:
         openlist.remove(current)
-        closedlist.append(start) #  ***
+        closedlist.append(start)
         tester = getneighbors(current, graph)
         for neighbor in tester:
+            if neighbor not in openlist and neighbor not in closedlist:
+                openlist.append(neighbor)
             tentative_g = current.g + costtomove(current, neighbor)
             if neighbor in closedlist:
                 continue
-            # if neighbor not in closedlist:
-            #     continue
+            if neighbor not in closedlist:
+                continue
             else:
                 neighbor.g = tentative_g + current.g
                 neighbor.parent = current

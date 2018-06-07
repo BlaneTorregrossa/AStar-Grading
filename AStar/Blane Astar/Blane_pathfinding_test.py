@@ -31,8 +31,16 @@ blane_graph = []
 counter = 0
 for ypos in range(10):
     for xpos in range(10):
-        blane_graph.append(Node(Count, (xpos, ypos)))
+        blane_graph.append(Node(counter, (xpos, ypos)))
         counter += 1
+
+def retrace(goal):
+    current = goal
+    path = []
+    while current:
+        path.append(current)
+        current = current.parent
+    return path
 
 def manhattan(start, goal):
     ydif = abs(goal[1] - start[1])
@@ -83,6 +91,8 @@ def blane_astar(start, goal, graph):
             tentative_g = node.g
             if node in closedlist:
                 pass
+            if node not in closedlist:
+                pass
             node.h = manhattan(node, goal)
             node.f = node.g + node.h
         current = openlist[0]
@@ -93,3 +103,32 @@ def blane_astar(start, goal, graph):
                 openlist[nodecmp] = openlist[node]
                 openlist[node] = temp
     return path
+
+def main():
+    copygraph = list(blane_graph)
+    test = [[82], [85], [76, 44, 11], [85, 74, 73, 82]]
+    start = copygraph[test[0][0]]
+    goal = copygraph[test[1][0]]
+    unwalkable = test[2]
+    expected = []
+    for i in test[3]:
+        expected.append(copygraph[i])
+
+    for i in unwalkable:
+        copygraph[i].walkable = False
+
+    result = blane_astar(start, goal, copygraph)
+
+    expectedres = []
+    for i in expected:
+        expectedres.append(int(i.guid))
+    print str.format('start::{0} goal::{1} unwalkables::{2}', start, goal, unwalkable)
+
+    actualres = []
+    for i in result:
+        actualres.append(int(i.guid))
+    print str.format('expected result {0} \nactual   result {1}', expectedres, actualres)
+
+
+if __name__ == '__main__':
+    main()

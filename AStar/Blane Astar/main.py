@@ -1,14 +1,19 @@
+# Change how modules are imported
+
 #   Algorithm 1
 import Blane_pathfinding_test
 from Blane_pathfinding_test import blane_graph
 from Blane_pathfinding_test import blane_astar
 
 #   Algorithm 2 
-#   Still need to import astar algorithm and the Graph
 import Christopher_pathfinding_test
 from Christopher_pathfinding_test import christopher_graph
 from Christopher_pathfinding_test import christopher_astar
 
+#   Algorithm 3
+import Christopher_AStar_test
+from Christopher_AStar_test import christopheralt_graph
+from Christopher_AStar_test import christopheralt_astar
 
 #   Does not return anything but adds to lists
 #   Needs smaller edits ***
@@ -47,22 +52,51 @@ def PassFail(passlist, giventest, actualpath, givengraph, currentalgo):
     actualpath.append(actualres)
 
 
+
 #   To get the difference in position between each node of two paths 
 #   and give a score based off of how close they are    ***
-def getpathscore(algopath, expectedpath, graph):
-    pass
+def getpathscore(algopath, expectedpath):
+    missingnodes = 0
+    extranodes = 0
+    scorelist = []
+    finalpathscore = 100
+    scoresubtract = 0
+    scorestandard = 100
+    totalscores = []
+
+    if len(algopath) > len(expectedpath):
+        extranodes = (len(algopath) - len(expectedpath))
+    elif len(algopath) < len(expectedpath)):
+        missingnodes = (len(algopath) - len(expectedpath))
+    
+    testpathlength = len(algopath) - 1
+    scoresubtract = finalpathscore / testpathlength
+
+    #   Do this in reverse order    ***
+    while testpathlength > 0:
+        ydifference = abs(algopath[testpathlength][1] - expectedpath[testpathlength][1])
+        xdifference = abs(algopath[testpathlength][0] - expectedpath[testpathlength][0])
+
+        score = xdifference + ydifference
+        scorelist.append(score)
+        testpathlength -= 1
+    
+
+    # Scoring of each individual node and how close they are to expected position
+    for i in range(0, len(scorelist)):
+        if scorelist[i] < 0:
+            totalscores.append(scorestandard)
+        if scorelist[i] > 0:
+            totalscores.append(scorestandard - scorelist[i])
+            if totalscores[len(totalscores) - 1] < 0:
+                totalscores[len(totalscores) - 1] = 0
     
 #   Takes given results from the passfail and pathscore tests and creates a final grade
 #   based off of the previous test results  ***
 def finalgrade(pfresults, pathresults):
     pflength = len(pfresults)
     for i in pfresults:
-        if pfresults[i - 1] == False:
-            pflength -= 1
-        else:
-            pass
-    
-    passscore = pflength / len(pfresults)
+        passscore = pflength / len(pathresults)
 
     # any additional math for pathresults
 
@@ -93,24 +127,28 @@ def main():
     # test5 = 
 
     testlist = [test1, test2, test3]
-    remainingtests = len(testlist)
+    testsmax = len(testlist) - 1
+    remainingtests = 0 
     currentresults = []
     givenpaths = []
     pathresults = []
     arrangement = []
-    usedgraphs = [blane_graph, christopher_graph]
-    algolist = []
+    usedgraphs = [christopher_graph, blane_graph, christopheralt_graph]
+    algolist = [christopher_astar, blane_astar, christopheralt_astar]
 
     # to go trough each test case in the list and run the test
     # Pass-Fail then path accuracy
-    while remainingtests > 0:
-        PassFail(currentresults, testlist[remainingtests - 1],
-         givenpaths, usedgraphs[0], algolist[0])
-        currenttest = testlist[remainingtests - 1]
-        # getpathscore(givenpaths, currenttest[2])
-        remainingtests -= 1
+    for i in range(0, len(algolist) - 1):
+        while testsmax >= remainingtests:
+            print(i)
+            print("Pre Pass Fail")
+            PassFail(currentresults, testlist[remainingtests],
+                givenpaths, usedgraphs[i], algolist[i])
+            print("Post Pass Fail")
+            # getpathscore()
+            remainingtests += 1
+            # arrangement.append(finalgrade(currentresults, pathresults))
 
-    arrangement.append(finalgrade(currentresults, pathresults))
 
     #   Should name algorithm in list with score when written to file ***
     #   Algorithm names here are not accurate
