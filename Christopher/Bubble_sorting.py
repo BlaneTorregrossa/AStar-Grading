@@ -10,10 +10,10 @@ def Bubble(sortable, loops):
     '''Need to sort through every value in the list. Locking the highest number into place when 
     it reaches the end of the list and repeating this process until finally the whole list is locked'''
     slist = sortable
-    sortloop = loops
-    for i in sortloop:
+    counter = loops
+    for i in counter:
         sortloop(slist)
-    return sortloop
+    return slist
 
 def swapplaces(pos1, pos2, num1, num2, sortable):
     '''swaps the positon of the two values in the list'''
