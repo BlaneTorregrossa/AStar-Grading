@@ -8,10 +8,11 @@ def Bubble(sortable, loops):
     '''Need to sort through every value in the list. Locking the highest number into place when 
     it reaches the end of the list and repeating this process until finally the whole list is locked'''
     slist = sortable
-    sortloop = loops
-    for i in sortloop:
+    counter = loops
+    while counter >= 0:
         sortloop(slist)
-    return sortloop
+        counter -= 1
+    return slist
 
 def swapplaces(pos1, pos2, num1, num2, sortable):
     '''swaps the positon of the two values in the list'''
@@ -37,7 +38,10 @@ def findgreatest(slist):
 
 def sortloop(slist):
     '''loops through the list once and sorts it'''
-    for i in slist:
-        notordered = isgreater(slist[i].value, slist[i + 1].value)
+    size = len(slist)
+    counter = size - 1
+    while counter > 0: 
+        notordered = isgreater(slist[counter][0], slist[counter + 1][0])
         if notordered == True:
-            swapplaces(i, i + 1, slist[i].value, slist[i + 1].value)
+            swapplaces(counter, counter + 1, slist[counter][0], slist[counter + 1][0])
+        counter -= 1
