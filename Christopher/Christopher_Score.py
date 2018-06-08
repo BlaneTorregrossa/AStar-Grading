@@ -5,20 +5,20 @@ def sortscores(results):
     nodescores = []
     finalscores = []
     for r in results:
-        nodes = nodescore(results[r].nodes)
+        nodes = nodescore(results[r].nodes, 5)
         nodescores.append(nodes)
-        cost = costscore(results[r].value)
+        cost = costscore(results[r].value, 100)
         costscores.append(cost)
     nodescores = Bubble(nodescores, 10)
     costscores = Bubble(costscores, 10)
 
-def costscore(cost):
-    score = 100 - cost
+def costscore(cost, average):
+    score = average - cost
     return score
 
-def nodescore(path):
+def nodescore(path, average):
     pathnodes = countnodes(path)
-    score = 7 - pathnodes
+    score = average - pathnodes
     return score 
 
 def countnodes(path):
@@ -36,3 +36,6 @@ def testsort():
     results.append(result2)
     results.append(result3)
     sortscores(results)
+
+def main():
+    testsort()
