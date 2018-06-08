@@ -1,7 +1,8 @@
 class Result(object):
-    def __init__(self, cost, nodes, lock)
-    self.value = value
+    def __init__(self, cost, nodes)
+    self.cost = cost
     self.nodes = nodes
+    self.lock = False
 
 def Bubble(sortable, loops):
     '''Need to sort through every value in the list. Locking the highest number into place when 

@@ -28,5 +28,11 @@ def countnodes(path):
     return nodecount
 
 def testsort():
-    
+    result1(160, 10)
+    result2(90, 5)
+    result3(200, 7)
     results = []
+    results.append(result1)
+    results.append(result2)
+    results.append(result3)
+    sortscores(results)
