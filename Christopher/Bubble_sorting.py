@@ -1,8 +1,8 @@
 class Result(object):
-    def __init__(self, cost, nodes)
-    self.cost = cost
-    self.nodes = nodes
-    self.lock = False
+    def __init__(self, cost, nodes):
+        self.cost = cost
+        self.nodes = nodes
+        self.lock = False
 
 def Bubble(sortable, loops):
     '''Need to sort through every value in the list. Locking the highest number into place when 
@@ -31,7 +31,7 @@ def findgreatest(slist):
     '''Find the highest unlocked value in the list'''
     high = 0
     for i in slist:
-        if slist[i].value > high
+        if slist[i].value > high:
             high = slist[i]
     return high
 

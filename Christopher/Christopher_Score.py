@@ -1,13 +1,18 @@
 import Bubble_sorting
 
-def sortscores(results):
+
+def sortscores(results, nodeaverage, costaverage):
     costscores = []
     nodescores = []
     finalscores = []
+    na = nodeaverage
+    ca = costaverage
+    i = -1
     for r in results:
-        nodes = nodescore(results[r].nodes, 5)
+        i = i+1
+        nodes = nodescore(results[i].nodes, na)
         nodescores.append(nodes)
-        cost = costscore(results[r].value, 100)
+        cost = costscore(results[i].value, ca)
         costscores.append(cost)
     nodescores = Bubble(nodescores, 10)
     costscores = Bubble(costscores, 10)
@@ -23,19 +28,22 @@ def nodescore(path, average):
 
 def countnodes(path):
     nodecount = 0
-    for each n in path:
+    for n in path:
         nodecount += 1
     return nodecount
 
 def testsort():
-    result1(160, 10)
-    result2(90, 5)
-    result3(200, 7)
+    nodelist1 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    nodelist2 = [1, 2, 3, 4, 5]
+    nodelist3 = [1, 2, 3, 4, 5, 6, 7]
+    result1 = (140, nodelist1)
+    result2 = (50, nodelist2)
+    result3 = (90, nodelist3)
     results = []
     results.append(result1)
     results.append(result2)
     results.append(result3)
-    sortscores(results)
+    sortscores(results, 5, 100)
 
 def main():
     testsort()
