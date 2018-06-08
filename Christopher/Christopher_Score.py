@@ -39,3 +39,4 @@ def testsort():
 
 def main():
     testsort()
+main()
