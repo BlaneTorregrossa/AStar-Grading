@@ -1,6 +1,5 @@
 # Change modules imported
 
-from tkinter import *
 from tkMessageBox import *
 from os.path import join
 
@@ -40,16 +39,16 @@ def PassFail(passlist, giventest, actualpath, givengraph, currentalgo):
     else:
         print("ERROR: Algorithm cannot be used! Does not meet specific requirments.")    
 
-    expectedres = []
-    for i in expected:
-        expectedres.append(int(i.guid))
+    # expectedres = []
+    # for i in expected:
+    #     expectedres.append(int(i.guid))
 
     actualres = []
     for i in result:
         actualres.append(int(i.guid))
 
-    if actualres == expectedres:
-        passcheck == True
+    if actualres[len(actualres) - 1] == goal:
+        passcheck = True
     
     passlist.append(passcheck)
     actualpath.append(actualres)
@@ -57,7 +56,7 @@ def PassFail(passlist, giventest, actualpath, givengraph, currentalgo):
 
 
 # #   To get the difference in position between each node of two paths 
-# #   and give a score based off of how close they are    ***
+# #   and give a score based off of how close they are
 # def getpathscore(algopath, expectedpath):
 #     missingnodes = 0
 #     extranodes = 0
@@ -75,7 +74,6 @@ def PassFail(passlist, giventest, actualpath, givengraph, currentalgo):
 #     testpathlength = len(algopath) - 1
 #     scoresubtract = finalpathscore / testpathlength
 
-#     #   Do this in reverse order    ***
 #     while testpathlength > 0:
 #         ydifference = abs(algopath[testpathlength][1] - expectedpath[testpathlength][1])
 #         xdifference = abs(algopath[testpathlength][0] - expectedpath[testpathlength][0])
@@ -95,7 +93,7 @@ def PassFail(passlist, giventest, actualpath, givengraph, currentalgo):
 #                 totalscores[len(totalscores) - 1] = 0
     
 #   Takes given results from the passfail and pathscore tests and creates a final grade
-#   based off of the previous test results  ***
+#   based off of the previous test results
 # def finalgrade(pfresults, pathresults):
 def finalgrade(pfresults):
     pflength = len(pfresults)
@@ -104,7 +102,10 @@ def finalgrade(pfresults):
     for i in pfresults:
         if pfresults[i - 1] == False:
             removalnum += 1
-    passscore = pflength / removalnum
+    if removalnum > 0:
+        passscore = pflength / removalnum
+    else:
+        passscore = pflength / pflength
 
     # any additional math for pathresults
 
@@ -127,7 +128,7 @@ def insertiontest(unarrangedlist):
 
         unarrangedlist[j+1] = comparison
 
-# Set up for use with multiple algorithms ***
+# Set up for use with multiple algorithms
 def main():
 
     test1 = [[43], [46], [95], [46, 45, 44, 43]]
@@ -155,19 +156,20 @@ def main():
                 givenpaths, usedgraphs[i], algolist[i])
             # getpathscore()
             remainingtests += 1
-            arrangement.append(finalgrade(currentresults))
+    arrangement.append(finalgrade(currentresults))
 
 
     #   standard insertion
+    arrangement.append(0.50)
     insertiontest(arrangement)
     towrite = len(arrangement)
-    print(towrite)
     counter = 0
+    open(resultFile, 'w').close()
     while counter <= towrite:
         with open(resultFile, 'a') as r:
-            r.write('\n' + 'Algorithm ' + repr(i) +
-            ' correctness: ' + repr(arrangement[i] - 1))
-            counter += 1
+            r.write('\n' + 'Algorithm ' + repr(-(i - counter)) +
+            ' correctness: ' + repr(arrangement[i - counter]))
+        counter += 1
     
     showinfo('Testing Done', "Result written out on document named: " + resultFile)
 
