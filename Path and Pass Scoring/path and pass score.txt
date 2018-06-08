@@ -1,0 +1,4 @@
+
+Algorithm 0 correctness: 0.5
+Algorithm 1 correctness: 1
+Algorithm 2 correctness: 0.5
