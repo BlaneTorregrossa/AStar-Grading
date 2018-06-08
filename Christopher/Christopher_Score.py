@@ -11,9 +11,9 @@ def sortscores(results, nodeaverage, costaverage):
     i = -1
     for r in results:
         i = i+1
-        nscore = nodescore(results[i].nodes, na)
+        nscore = nodescore(results[i][0], na)
         nodescores.append(nscore)
-        cscore = costscore(results[i].cost, ca)
+        cscore = costscore(results[i][1], ca)
         costscores.append(cscore)
     nodescores = Bubble(nodescores, 10)
     costscores = Bubble(costscores, 10)
