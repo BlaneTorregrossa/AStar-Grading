@@ -3,7 +3,6 @@ import math
 
 class Node(object):
     '''data'''
-
     def __init__(self, guid, position):
         
         self.guid = ''

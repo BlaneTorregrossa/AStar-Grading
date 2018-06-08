@@ -1,5 +1,6 @@
 import Bubble_sorting
 
+from Christopher_pathfinding import GRAPH
 
 def sortscores(results, nodeaverage, costaverage):
     costscores = []
@@ -10,10 +11,10 @@ def sortscores(results, nodeaverage, costaverage):
     i = -1
     for r in results:
         i = i+1
-        nodes = nodescore(results[i].nodes, na)
-        nodescores.append(nodes)
-        cost = costscore(results[i].value, ca)
-        costscores.append(cost)
+        nscore = nodescore(results[i].nodes, na)
+        nodescores.append(nscore)
+        cscore = costscore(results[i].cost, ca)
+        costscores.append(cscore)
     nodescores = Bubble(nodescores, 10)
     costscores = Bubble(costscores, 10)
 
@@ -33,9 +34,9 @@ def countnodes(path):
     return nodecount
 
 def testsort():
-    nodelist1 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-    nodelist2 = [1, 2, 3, 4, 5]
-    nodelist3 = [1, 2, 3, 4, 5, 6, 7]
+    nodelist1 = []
+    nodelist2 = []
+    nodelist3 = []
     result1 = (140, nodelist1)
     result2 = (50, nodelist2)
     result3 = (90, nodelist3)

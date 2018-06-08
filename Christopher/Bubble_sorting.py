@@ -1,3 +1,5 @@
+from Christopher_pathfinding import Node
+
 class Result(object):
     def __init__(self, cost, nodes):
         self.cost = cost
