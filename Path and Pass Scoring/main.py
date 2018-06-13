@@ -38,7 +38,7 @@ def PassFail(passlist, giventest, actualpath, givengraph, currentalgo):
     for i in result:
         actualres.append(int(i.guid))
 
-    if len(actualres) <= 1:
+    if len(actualres) <= 0:
         passcheck = False
     elif actualres[len(actualres) - 1] == goal:
         passcheck = True
@@ -48,7 +48,7 @@ def PassFail(passlist, giventest, actualpath, givengraph, currentalgo):
 
 # simple node comparison
 # Just checks if both lists match 
-def getpathscore(algopath, expectedpath):
+def getpathscore(algopath, expectedpath, comparelist):
     missingnodes = 0
     extranodes = 0
     scorelist = []
@@ -62,7 +62,7 @@ def getpathscore(algopath, expectedpath):
     # elif len(algopath) < len(expectedpath):
     #     missingnodes = (len(algopath) - len(expectedpath))
     
-    testpathlength = len(algopath) - 1
+    testpathlength = len(algopath)
     if testpathlength > 0:
         scoresubtract = returnpathscore / testpathlength
     else:
@@ -76,7 +76,7 @@ def getpathscore(algopath, expectedpath):
             pass
         counter += 1
     
-    comparisonresults.append(float(returnpathscore))
+    comparelist.append(float(returnpathscore))
     
     
 #   Takes given results from the passfail and pathscore tests and creates a final grade
@@ -152,9 +152,10 @@ def main():
         while remainingtests <= testsmax:
             PassFail(currentresults, testlist[remainingtests],
                 givenpaths, usedgraphs[i], algolist[i])
-            getpathscore(givenpaths[i], testlist[remainingtests - 1])
+            getpathscore(givenpaths[i], testlist[remainingtests - 1], comparisonresults)
             remainingtests += 1
         i += 1
+        remainingtests = 0
         arrangement.append(finalgrade(currentresults, comparisonresults))
 
 
