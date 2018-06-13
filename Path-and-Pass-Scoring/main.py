@@ -1,4 +1,5 @@
 # Is it possible to swap out imported modules based on text file or application based action at runtime
+#   Whole project needs to be refactored
 
 import sys
 
@@ -16,6 +17,8 @@ from Christopher_pathfinding_test import christopher_graph
 from Christopher_pathfinding_test import christopher_astar
 
 #   Does not return anything but adds to lists
+#   Save on space and seperate from file    ***
+#   busted  *** 
 def PassFail(passlist, giventest, actualpath, givengraph, currentalgo):
     passcheck = False
     copygraph = list(givengraph)
@@ -23,13 +26,6 @@ def PassFail(passlist, giventest, actualpath, givengraph, currentalgo):
     start = copygraph[test[0][0]]
     goal = copygraph[test[1][0]]
     unwalkable = test[2]
-    expected = []
-
-    for i in test[3]:
-        expected.append(copygraph[i])
-
-    for i in unwalkable:
-        copygraph[i].walkable = False
 
     if currentalgo:
         result = currentalgo(start, goal, copygraph)
@@ -37,17 +33,19 @@ def PassFail(passlist, giventest, actualpath, givengraph, currentalgo):
     actualres = []
     for i in result:
         actualres.append(int(i.guid))
+        if actualres[len(actualres) - 1] == goal:
+            passcheck == True
+            passlist.append(passcheck)
+            actualpath.append(actualres)
+            return
 
-    if len(actualres) <= 0:
-        passcheck = False
-    elif actualres[len(actualres) - 1] == goal:
-        passcheck = True
-    
     passlist.append(passcheck)
     actualpath.append(actualres)
 
 # simple node comparison
 # Just checks if both lists match 
+# Save on space and seperate from file  ***
+# busted    ***
 def getpathscore(algopath, expectedpath, comparelist):
     missingnodes = 0
     extranodes = 0
@@ -62,25 +60,28 @@ def getpathscore(algopath, expectedpath, comparelist):
     # elif len(algopath) < len(expectedpath):
     #     missingnodes = (len(algopath) - len(expectedpath))
     
-    testpathlength = len(algopath)
-    if testpathlength > 0:
-        scoresubtract = returnpathscore / testpathlength
-    else:
-         return 0
+    maxcount = 0
+    if len(algopath) > len(expectedpath) or len(algopath) == len(expectedpath):
+        maxcount = len(expectedpath) - 1
+        counter = 0
+        while counter != maxcount:
+            if algopath[counter] != expectedpath[counter]:
+                returnpathscore -= scoresubtract
+            counter += 1
+    if len(expectedpath) > len(algopath):
+        maxcount = len(algopath) - 1
+        counter = 0
+        while counter != maxcount:
+            if algopath[counter] != expectedpath[counter]:
+                returnpathscore -= scoresubtract
+            counter += 1
 
-    counter = 0
-    while counter != testpathlength:
-        if algopath[counter] != expectedpath[counter]:
-            returnpathscore -= scoresubtract
-        else:
-            pass
-        counter += 1
-    
     comparelist.append(float(returnpathscore))
     
     
 #   Takes given results from the passfail and pathscore tests and creates a final grade
 #   based off of the previous test results
+#   Busted and needs to be in a seperate file   ***
 def finalgrade(pfresults, pathresults):
     pflength = len(pfresults)
     removalnum = 0
@@ -105,7 +106,7 @@ def finalgrade(pfresults, pathresults):
         finalpathscore = finalpathscore / pathscoresize
 
     passscore = float(passscore / 2)
-    finalpathscore = float(finalpathscore / 2)
+    finalpathscore = (float(finalpathscore / 4) / 100) 
 
     return float(finalpathscore + passscore) 
 
@@ -122,6 +123,7 @@ def insertiontest(unarrangedlist):
         unarrangedlist[j+1] = comparison
 
 # Set up for use with multiple algorithms
+# almost everything should go trough
 def main():
 
     # reload(Christopher_pathfinding_test)
@@ -132,6 +134,7 @@ def main():
     test3 = [[82], [85], [76, 44, 11], [85, 74, 73, 82]]
     # test4 = 
     # test5 = 
+    # ...
 
     testlist = [test1, test2, test3]
     testsmax = len(testlist) - 1
@@ -147,6 +150,7 @@ def main():
 
     # to go trough each test case in the list and run the test
     # Pass-Fail then path accuracy
+    #   Bad ***
     i = 0
     while i < len(algolist):
         while remainingtests <= testsmax:

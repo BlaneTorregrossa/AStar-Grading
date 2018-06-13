@@ -81,7 +81,7 @@ def christopher_astar(start, goal, graph):
     openlist.sort(key=lambda node: node.f)
     while goal not in closedlist:
         openlist.remove(current)
-        closedlist.append(start)
+        closedlist.append(current)
         tester = getneighbors(current, graph)
         for neighbor in tester:
             if neighbor not in openlist and neighbor not in closedlist:
