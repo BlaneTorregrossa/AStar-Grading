@@ -33,12 +33,12 @@ def countnodes(path):
     return nodecount
 
 def testsort():
-    nodelist1 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-    nodelist2 = [1, 2, 3, 4, 5]
-    nodelist3 = [1, 2, 3, 4, 5, 6, 7]
-    result1 = (140, nodelist1)
-    result2 = (50, nodelist2)
-    result3 = (90, nodelist3)
+    nodelist1 = 
+    nodelist2 = 
+    nodelist3 = 
+    result1 = ()
+    result2 = ()
+    result3 = ()
     results = []
     results.append(result1)
     results.append(result2)

@@ -40,7 +40,7 @@ def sortloop(slist):
     '''loops through the list once and sorts it'''
     size = len(slist)
     counter = size - 1
-    while counter > 0: 
+    while counter >= 0: 
         notordered = isgreater(slist[counter][0], slist[counter + 1][0])
         if notordered == True:
             swapplaces(counter, counter + 1, slist[counter][0], slist[counter + 1][0])

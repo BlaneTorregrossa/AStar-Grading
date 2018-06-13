@@ -72,6 +72,12 @@ def retrace(goal):
         current = current.parent
     return path
 
+def createcostvalue(path):
+    totalcost =-0
+    for n in path:
+        totalcost += path[n].f
+    return totalcost
+
 def astar(start, goal, graph):
     path = []
     current = start
