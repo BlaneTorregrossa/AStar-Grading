@@ -75,60 +75,10 @@ def getneighbors(node, nodes):
     return neighbors
 
 
-
 def blane_astar(start, goal, graph):
     current = start
     openlist = [current]
     closedlist = []
     path = []
-    while openlist:
-        openlist.remove(current)
-        closedlist.append(start)
-        for node in getneighbors(current, graph):            
-            if node not in openlist and node not in closedlist:
-                openlist.append(node)
-            node.g = costtomove(current, node) + current.g
-            tentative_g = node.g
-            if node in closedlist:
-                pass
-            if node not in closedlist:
-                pass
-            node.h = manhattan(node, goal)
-            node.f = node.g + node.h
-        current = openlist[0]
-    for node in range(0, len(openlist)):
-        for nodecmp in range(0, len(openlist)):
-            if openlist[node].fscore < openlist[nodecmp].fscore:
-                temp = openlist[nodecmp]
-                openlist[nodecmp] = openlist[node]
-                openlist[node] = temp
+    #   bad stuff that brings the wrong result 
     return path
-
-def main():
-    copygraph = list(blane_graph)
-    test = [[82], [85], [76, 44, 11], [85, 74, 73, 82]]
-    start = copygraph[test[0][0]]
-    goal = copygraph[test[1][0]]
-    unwalkable = test[2]
-    expected = []
-    for i in test[3]:
-        expected.append(copygraph[i])
-
-    for i in unwalkable:
-        copygraph[i].walkable = False
-
-    result = blane_astar(start, goal, copygraph)
-
-    expectedres = []
-    for i in expected:
-        expectedres.append(int(i.guid))
-    print str.format('start::{0} goal::{1} unwalkables::{2}', start, goal, unwalkable)
-
-    actualres = []
-    for i in result:
-        actualres.append(int(i.guid))
-    print str.format('expected result {0} \nactual   result {1}', expectedres, actualres)
-
-
-if __name__ == '__main__':
-    main()

@@ -1,4 +1,4 @@
 
-Algorithm 0 correctness: 0.5
-Algorithm 1 correctness: 1
-Algorithm 2 correctness: 0.5
+'Blane_AStar' correctness: 0.0
+'Chris_AStar' correctness: 0.0
+'Blane_AStar' correctness: 0.0
