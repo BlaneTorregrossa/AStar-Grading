@@ -2,6 +2,7 @@ from Bubble_sorting import Bubble
 
 
 def sortscores(results, nodeaverage, costaverage):
+    #Sorts the list of results by the combined total of their node score and their cost score
     costscores = []
     nodescores = []
     finalscores = []
@@ -18,15 +19,18 @@ def sortscores(results, nodeaverage, costaverage):
     costscores = Bubble(costscores, 10)
 
 def costscore(cost, average):
+    #determines a path's cost score
     score = average - cost
     return score
 
 def nodescore(path, average):
+    #determines a path's node score
     pathnodes = countnodes(path)
     score = average - pathnodes
     return score 
 
 def countnodes(path):
+    #counts the nodes in a path
     nodecount = 0
     for n in path:
         nodecount += 1
