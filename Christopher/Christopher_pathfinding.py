@@ -10,7 +10,7 @@ class Node(object):
         if guid < 10:
             self.guid = str('0' + str(guid))
         else:
-            self.guid = str.guid
+            self.guid = str(guid)
 
         self.pos = position
         self.h = 0
@@ -27,12 +27,12 @@ class Node(object):
         '''str'''
         return str.format('({0}) ', self.guid)
 
-    def manhattan(start, goal):
-        
-        ydif = abs(goal[1] - start[1])
-        xdif = abs(goal[0] - start[0])
+def manhattan(start, goal):
+    
+    ydif = abs(goal[1] - start[1])
+    xdif = abs(goal[0] - start[0])
 
-        return xdif + ydif
+    return xdif + ydif
 
     
 def costtomove(start, goal):
@@ -89,7 +89,7 @@ def astar(start, goal, graph):
     while goal not in closedlist:
         openlist.remove(current)
         tester = getneighbors(current, graph)
-        for neighbors in tester:
+        for neighbor in tester:
             tentative_g = current.g + costtomove(current, neighbor)
             if neighbor in closedlist:
                 continue
@@ -98,8 +98,6 @@ def astar(start, goal, graph):
                 neighbor.parent = current
             neighbor.h = manhattan(neighbor, goal)
             neighbor.f = neighbor.g + neighbor.h
-
-        current = openlist[0]
         if current == goal:
             path = retrace(goal)
             for i in openlist:
