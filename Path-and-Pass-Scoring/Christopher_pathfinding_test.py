@@ -1,4 +1,3 @@
-'''Christopher_pathfinding.py'''
 import math
 
 class Node(object):
@@ -41,8 +40,6 @@ def costtomove(start, goal):
         return 10
     return 14
 
-
-
 def getneighbors(node, nodes):
     '''asdf'''
     current = node
@@ -71,42 +68,45 @@ def retrace(goal):
         path.append(current)
         current = current.parent
     return path
-
+    
+#   ***
 def christopher_astar(start, goal, graph):
     path = []
-    current = start
     openlist = []
     closedlist = []
-    openlist.append(current)
-    openlist.sort(key=lambda node: node.f)
-    while goal not in closedlist:
-        openlist.remove(current)
-        closedlist.append(current)
-        tester = getneighbors(current, graph)
-        for neighbor in tester:
-            if neighbor not in openlist and neighbor not in closedlist:
-                openlist.append(neighbor)
-            tentative_g = current.g + costtomove(current, neighbor)
-            if neighbor in closedlist:
-                continue
-            if neighbor not in closedlist:
-                continue
-            else:
-                neighbor.g = tentative_g + current.g
-                neighbor.parent = current
-            neighbor.h = manhattan(neighbor, goal)
-            neighbor.f = neighbor.g + neighbor.h
+    current = start
+    reset = False
+
+#   *** Everything belowin this method
+
+    if len(closedlist) <= 0:
+        closedlist.append(start)
+    while openlist:
+        if reset == True:
+            openlist.remove(current)
+        for node in getneighbors(current, graph):
+            if node not in openlist and node not in closedlist:
+                openlist.append(node)
+            node.g = current.g + costtomove(current, node)
+            tentative_g = node.g
+            if node not in closedlist:
+                pass
+            if node in closedlist:
+                pass
+            node.h = manhattan(node, goal)
+            node.f = node.g + node.h
+        reset = True
         
         current = openlist[0]
-        if current == goal:
-            path = retrace(goal)
-            for i in openlist:
-                i.parent = None
-            for i in closedlist:
-                i.parent = None
-            return path
+        for node in range(0, len(openlist)):
+            for nodecmp in range(0, len(openlist)):
+                if openlist[node].f < openlist[node].f:
+                    temp = openlist[nodecmp]
+                    openlist[nodecmp] = openlist[node]
+                    openlist[node] = temp
     return path
 
+#   *** Useless
 def testfunc(astarfunc):
     '''tests astar function'''
     test = shuffle()
@@ -141,7 +141,7 @@ for ypos in range(10):
         christopher_graph.append(Node(COUNT, (xpos, ypos)))
         COUNT += 1
 
-
+#   *** Useless
 def shuffle():
     '''shuffle the graph'''
     import random
@@ -175,6 +175,7 @@ def main():
     for i in unwalkable:
         copygraph[i].walkable = False
 
+    #   Gives useless result
     result = christopher_astar(start, goal, copygraph)
 
     expectedres = []

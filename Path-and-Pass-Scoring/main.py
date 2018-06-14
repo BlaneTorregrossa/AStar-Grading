@@ -6,19 +6,18 @@ import sys
 from tkMessageBox import *
 from os.path import join
 
-#   Algorithm 1 The busted one
+#   Algorithm 1
 import Blane_pathfinding_test
 from Blane_pathfinding_test import blane_graph
 from Blane_pathfinding_test import blane_astar
 
-#   Algorithm 2 The working one
+#   Algorithm 2
 import Christopher_pathfinding_test
 from Christopher_pathfinding_test import christopher_graph
 from Christopher_pathfinding_test import christopher_astar
 
 #   Does not return anything but adds to lists
-#   Save on space and seperate from file    ***
-#   busted  *** 
+#   Rework  *** 
 def PassFail(passlist, giventest, actualpath, givengraph, currentalgo):
     passcheck = False
     copygraph = list(givengraph)
@@ -27,13 +26,12 @@ def PassFail(passlist, giventest, actualpath, givengraph, currentalgo):
     goal = copygraph[test[1][0]]
     unwalkable = test[2]
 
-    if currentalgo:
-        result = currentalgo(start, goal, copygraph)
+    result = currentalgo(start, goal, copygraph)
 
     actualres = []
-    for i in result:
-        actualres.append(int(i.guid))
-        if actualres[len(actualres) - 1] == goal:
+    for node in result:
+        actualres.append(int(node.guid))
+        if actualres[0] == goal:
             passcheck == True
             passlist.append(passcheck)
             actualpath.append(actualres)
@@ -44,8 +42,7 @@ def PassFail(passlist, giventest, actualpath, givengraph, currentalgo):
 
 # simple node comparison
 # Just checks if both lists match 
-# Save on space and seperate from file  ***
-# busted    ***
+# Rework    ***
 def getpathscore(algopath, expectedpath, comparelist):
     missingnodes = 0
     extranodes = 0
@@ -69,7 +66,7 @@ def getpathscore(algopath, expectedpath, comparelist):
                 returnpathscore -= scoresubtract
             counter += 1
     if len(expectedpath) > len(algopath):
-        maxcount = len(algopath) - 1
+        maxcount = len(algopath)
         counter = 0
         while counter != maxcount:
             if algopath[counter] != expectedpath[counter]:
@@ -81,7 +78,7 @@ def getpathscore(algopath, expectedpath, comparelist):
     
 #   Takes given results from the passfail and pathscore tests and creates a final grade
 #   based off of the previous test results
-#   Busted and needs to be in a seperate file   ***
+#   Rework  ***
 def finalgrade(pfresults, pathresults):
     pflength = len(pfresults)
     removalnum = 0
@@ -122,12 +119,10 @@ def insertiontest(unarrangedlist):
 
         unarrangedlist[j+1] = comparison
 
+# Rework    ***
 # Set up for use with multiple algorithms
 # almost everything should go trough
 def main():
-
-    # reload(Christopher_pathfinding_test)
-    # reload(Blane_pathfinding_test)
 
     test1 = [[43], [46], [95], [46, 45, 44, 43]]
     test2 = [[11], [67], [45, 55, 65, 75], [67, 56, 46, 35, 34, 33, 22]]
@@ -146,11 +141,10 @@ def main():
     arrangement = []
     usedgraphs = [christopher_graph, blane_graph]
     algolist = [christopher_astar, blane_astar]
-    algorithmnames = ["Chris_AStar", "Blane_AStar"]
+    names = ["Chris_pathfinding", "Blane_pathfinding"]
 
     # to go trough each test case in the list and run the test
     # Pass-Fail then path accuracy
-    #   Bad ***
     i = 0
     while i < len(algolist):
         while remainingtests <= testsmax:
@@ -160,17 +154,17 @@ def main():
             remainingtests += 1
         i += 1
         remainingtests = 0
+        
         arrangement.append(finalgrade(currentresults, comparisonresults))
-
 
     #   standard insertion
     insertiontest(arrangement)
-    towrite = len(arrangement)
+    towrite = len(arrangement) - 1
     counter = 0
     open(resultFile, 'w').close()
     while counter <= towrite:
         with open(resultFile, 'a') as r:
-            r.write('\n' + repr(algorithmnames[counter - 1]) +
+            r.write('\n' + repr(names[counter - 1]) +
             ' correctness: ' + repr(arrangement[counter - 1]))
         counter += 1
     
