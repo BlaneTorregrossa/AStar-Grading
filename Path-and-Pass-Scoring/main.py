@@ -1,18 +1,13 @@
-# Is it possible to swap out imported modules based on text file or application based action at runtime
-#   Whole project needs to be refactored
+# lots of importing to be done here
 
 import sys
-
 from tkMessageBox import *
-from os.path import join
 
 #   Algorithm 1
-import Blane_pathfinding_test
 from Blane_pathfinding_test import blane_graph
 from Blane_pathfinding_test import blane_astar
 
 #   Algorithm 2
-import Christopher_pathfinding_test
 from Christopher_pathfinding_test import christopher_graph
 from Christopher_pathfinding_test import christopher_astar
 
@@ -52,11 +47,6 @@ def getpathscore(algopath, expectedpath, comparelist):
     scorestandard = 100
     totalscores = []
 
-    # if len(algopath) > len(expectedpath):
-    #     extranodes = (len(algopath) - len(expectedpath))
-    # elif len(algopath) < len(expectedpath):
-    #     missingnodes = (len(algopath) - len(expectedpath))
-    
     maxcount = 0
     if len(algopath) > len(expectedpath) or len(algopath) == len(expectedpath):
         maxcount = len(expectedpath) - 1
@@ -79,7 +69,7 @@ def getpathscore(algopath, expectedpath, comparelist):
 #   Takes given results from the passfail and pathscore tests and creates a final grade
 #   based off of the previous test results
 #   Rework  ***
-def finalgrade(pfresults, pathresults):
+def finalgrade(pfresults, pathresults, algoname, pffile, pafile):
     pflength = len(pfresults)
     removalnum = 0
     scorebase = 100
@@ -107,8 +97,9 @@ def finalgrade(pfresults, pathresults):
 
     return float(finalpathscore + passscore) 
 
-# standard insertion algorithm
-def insertiontest(unarrangedlist):
+#   standard insertion algorithm
+#   *** Sperate
+def insertion(unarrangedlist):
     for i in range(1, len(unarrangedlist)):
         comparison = unarrangedlist[i]
         j = i-1
@@ -118,6 +109,15 @@ def insertiontest(unarrangedlist):
             j -= 1
 
         unarrangedlist[j+1] = comparison
+
+#   ***
+def writeresults(givenlist, givenfile, giventitle):
+    towrite = len(givenlist) - 1
+    counter = 0
+    while counter <= towrite:
+        with open(givenfile, 'a') as r:
+            r.write('\n' + repr(giventitle) + repr(givenfile) + repr(givenlist))
+
 
 # Rework    ***
 # Set up for use with multiple algorithms
@@ -133,15 +133,25 @@ def main():
 
     testlist = [test1, test2, test3]
     testsmax = len(testlist) - 1
-    resultFile = "path and pass score.txt"
+    resultFile = "Final Grade.txt"
+    passfailresultFile = "Pass Fail Score.txt"
+    pathaccuracyresultFile = "Path Accuracy Score.txt"
+    dumpingFile = "dump.txt"
+    #   ***
+
     remainingtests = 0 
     currentresults = []
     givenpaths = []
     comparisonresults = []
     arrangement = []
-    usedgraphs = [christopher_graph, blane_graph]
-    algolist = [christopher_astar, blane_astar]
-    names = ["Chris_pathfinding", "Blane_pathfinding"]
+    usedgraphs = [blane_graph, christopher_graph]
+    algolist = [blane_astar ,christopher_astar]
+    names = ['Blane_pathfinding', 'Chris_pathfinding']
+
+    open(resultFile, 'w').close
+    open(passfailresultFile, 'w').close
+    open(pathaccuracyresultFile, 'w').close
+    open(dumpingFile, 'w').close
 
     # to go trough each test case in the list and run the test
     # Pass-Fail then path accuracy
@@ -152,23 +162,25 @@ def main():
                 givenpaths, usedgraphs[i], algolist[i])
             getpathscore(givenpaths[i], testlist[remainingtests - 1], comparisonresults)
             remainingtests += 1
+        arrangement.append(finalgrade(currentresults, comparisonresults, names[i], passfailresultFile, pathaccuracyresultFile))
         i += 1
         remainingtests = 0
-        
-        arrangement.append(finalgrade(currentresults, comparisonresults))
 
-    #   standard insertion
-    insertiontest(arrangement)
+    #sorting and then writting to file
+    insertion(arrangement)
     towrite = len(arrangement) - 1
     counter = 0
-    open(resultFile, 'w').close()
     while counter <= towrite:
         with open(resultFile, 'a') as r:
             r.write('\n' + repr(names[counter - 1]) +
             ' correctness: ' + repr(arrangement[counter - 1]))
         counter += 1
     
+    # Pop up window at the end of the method once results have been gathered and written to a given file
+    # This is to inform the user that a document has been created/updated to include the results of tested algorithm 
     showinfo('Testing Done', "Result written out on document named: " + resultFile)
+    
+    
 
 main()
 

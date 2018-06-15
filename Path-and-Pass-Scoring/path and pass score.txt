@@ -1,3 +1,0 @@
-
-'Blane_pathfinding' correctness: 0.4944444444444444
-'Chris_pathfinding' correctness: 0.45833333333333337
